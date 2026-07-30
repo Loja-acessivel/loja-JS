@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crie sua conta na Pibble Store.">
+    <title>Pibble Store — Cadastro</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/assets/css/acessibilidade.css">
+</head>
+
+<body class="pagina-auth">
+    <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
+
+    <main class="auth-page" id="conteudo-principal">
+        <section class="auth-shell auth-shell--cadastro" aria-labelledby="titulo-cadastro">
+            <aside class="auth-visual">
+                <img src="/assets/images/pibble-login.png" alt="Filhote de bulldog francês deitado confortavelmente"
+                    class="auth-visual__imagem">
+                <div class="auth-visual__degrade" aria-hidden="true"></div>
+                <div class="auth-visual__conteudo">
+                    <h1>Pibble Store, a sua loja preferida para encontrar seus pibbles!</h1>
+                    <p>Crie sua conta e descubra uma experiência de compra feita com carinho.</p>
+                </div>
+            </aside>
+
+            <section class="auth-panel">
+                <div class="auth-panel__conteudo">
+                    <a class="auth-brand" aria-label="Pibble Store — ir para a loja">
+                        <span class="auth-brand__simbolo">
+                            <img src="/assets/images/icons/pibble-logo.png" alt="" aria-hidden="true">
+                        </span>
+                        <span>Pibble Store</span>
+                    </a>
+
+                    <div class="auth-cabecalho">
+                        <h2 id="titulo-cadastro">Crie sua conta</h2>
+                        <p>Preencha seus dados para começar.</p>
+                    </div>
+
+                    <form id="loginFormComprador" class="auth-form auth-form--cadastro">
+                        <div class="form-group">
+                            <label for="tipo">Tipo de conta</label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="comprador">Comprador</option>
+                                <option value="vendedor">Vendedor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nome">Nome completo</label>
+                            <input type="text" id="nome" name="nome" required autocomplete="name"
+                                placeholder="Digite seu nome">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpfCnpj">CPF ou CNPJ</label>
+                            <input type="text" id="cpfCnpj" name="cpfCnpj" required inputmode="numeric"
+                                placeholder="Digite seu CPF ou CNPJ">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" required autocomplete="email"
+                                placeholder="voce@exemplo.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" id="password" name="password" required autocomplete="new-password"
+                                placeholder="Crie uma senha">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password-confirm">Confirme a senha</label>
+                            <input type="password" id="password-confirm" name="passwordConfirm" required
+                                autocomplete="new-password" placeholder="Repita sua senha">
+                        </div>
+
+                        <button type="submit" class="btn-submit form-group--inteiro" id="btn-submit">Cadastrar</button>
+                        <p class="auth-feedback form-group--inteiro" id="auth-feedback" role="status"
+                            aria-live="polite" hidden></p>
+                    </form>
+
+                    <p class="auth-alternativa">
+                        Já possui uma conta?
+                        <a href="login.html" class="helper-link" id="link-login">Entrar</a>
+                    </p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <button class="botao-acessibilidade" id="a11y-botao-abrir" type="button" aria-haspopup="true"
+        aria-expanded="false" aria-controls="a11y-painel" aria-label="Abrir opções de acessibilidade">
+        <img src="/assets/images/icons/acessibilidade.png" alt="" class="icone-acessibilidade" aria-hidden="true">
+    </button>
+
+    <section class="painel-acessibilidade" id="a11y-painel" aria-label="Opções de acessibilidade">
+        <button class="painel-detalhe__fechar" id="a11y-fechar" type="button"
+            aria-label="Fechar opções de acessibilidade" style="position:absolute;top:10px;right:10px;">×</button>
+        <h2>Acessibilidade</h2>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Tamanho da fonte</span>
+            <div class="controle-fonte">
+                <button type="button" id="a11y-diminuir-fonte" aria-label="Diminuir fonte">A−</button>
+                <span id="a11y-valor-fonte">100%</span>
+                <button type="button" id="a11y-aumentar-fonte" aria-label="Aumentar fonte">A+</button>
+            </div>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <label class="interruptor" for="a11y-alto-contraste">
+                Alto contraste
+                <input type="checkbox" id="a11y-alto-contraste">
+            </label>
+            <label class="interruptor" for="a11y-modo-daltonico">
+                Modo adaptado para daltonismo
+                <input type="checkbox" id="a11y-modo-daltonico">
+            </label>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Leitura da página</span>
+            <button class="botao-ler-pagina" id="a11y-ler-pagina" type="button">Ouvir esta página</button>
+        </div>
+
+        <button class="botao-reiniciar" id="a11y-reiniciar" type="button">Redefinir preferências</button>
+    </section>
+
+    <script src="/assets/js/acessibilidade.js"></script>
+    <script src="/assets/js/login.js"></script>
+</body>
+
+</html>

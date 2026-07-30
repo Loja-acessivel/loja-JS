@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pibble Store — Carrinho</title>
+    <meta name="description" content="Revise os produtos do seu carrinho e finalize a compra." />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/acessibilidade.css" />
+</head>
+
+<body>
+
+    <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
+
+    <!-- ===================== CABEÇALHO ===================== -->
+    <header class="cabecalho">
+        <a href="comprador.html" class="cabecalho__marca">
+            <img src="/assets/images/icons/pibble-logo.png" alt="" class="logo-pibble" aria-hidden="true" />
+            Pibble Store
+        </a>
+
+        <div class="cabecalho__acoes" style="margin-left:auto;">
+            <a class="botao-cabecalho" href="comprador.html">← Continuar comprando</a>
+            <a class="botao-cabecalho botao-cabecalho--icone" href="usuario.html" aria-label="Minha conta">
+                <img src="/assets/images/icons/usuario.png" alt="" class="icone-navegacao" aria-hidden="true" />
+            </a>
+        </div>
+    </header>
+
+    <div class="faixa-pagina">
+        <h1>Seu carrinho</h1>
+        <p>Revise os produtos escolhidos antes de finalizar a compra.</p>
+    </div>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+    <main id="conteudo-principal" class="conteudo">
+
+        <!-- ---------- PASSO 1: Itens do carrinho ---------- -->
+        <section id="passo-carrinho">
+            <p class="estado-vazio" id="carrinho-vazio" hidden>
+                Seu carrinho está vazio. <a href="comprador.html">Ver produtos</a>
+            </p>
+
+            <div class="pagina-carrinho" id="pagina-carrinho">
+                <div class="lista-carrinho" id="lista-carrinho" aria-live="polite">
+                    <!-- Itens do carrinho inseridos aqui via JavaScript -->
+                </div>
+
+                <aside class="resumo-carrinho" aria-label="Resumo do pedido">
+                    <h2>Resumo do pedido</h2>
+                    <div class="resumo-linha">
+                        <span>Itens (<span id="resumo-qtd-itens">0</span>)</span>
+                        <span id="resumo-subtotal">R$ 0,00</span>
+                    </div>
+                    <div class="resumo-linha">
+                        <span>Frete</span>
+                        <span>Grátis</span>
+                    </div>
+                    <div class="resumo-linha resumo-linha--total">
+                        <span>Total</span>
+                        <span id="resumo-total">R$ 0,00</span>
+                    </div>
+                    <button class="botao botao--primario" id="botao-comprar">Finalizar compra</button>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ---------- PASSO 2: Recapitulação do pedido ---------- -->
+        <section id="passo-recapitulacao" hidden>
+            <div class="painel-detalhe" style="max-width:640px;margin:0 auto;padding:24px;">
+                <h2>Revise seu pedido</h2>
+                <p style="color:var(--texto-secundario);margin-top:0;">
+                    Confira os produtos e o valor total antes de confirmar a compra.
+                </p>
+
+                <div class="recapitulacao__lista" id="recapitulacao-lista">
+                    <!-- Itens da recapitulação inseridos aqui via JavaScript -->
+                </div>
+
+                <div class="resumo-linha resumo-linha--total">
+                    <span>Total a pagar</span>
+                    <span id="recapitulacao-total">R$ 0,00</span>
+                </div>
+
+                <div class="linha-acoes">
+                    <button class="botao botao--primario" id="botao-confirmar-compra">Confirmar compra</button>
+                    <button class="botao botao--secundario" id="botao-voltar-carrinho">Voltar ao carrinho</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ---------- PASSO 3: Confirmação ---------- -->
+        <section id="passo-confirmacao" hidden>
+            <div class="confirmacao-pedido">
+                <div class="icone-sucesso" aria-hidden="true">✓</div>
+                <h2>Pedido confirmado!</h2>
+                <p>Recebemos sua compra e ela já está sendo preparada.</p>
+                <p><a class="botao botao--primario" href="comprador.html"
+                        style="display:inline-flex;text-decoration:none;">Voltar à loja</a></p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="rodape">
+        <div class="rodape__conteudo">
+            <p>Pibble Store — comprometida com uma experiência de compra para todas as pessoas.</p>
+            <p><a href="#conteudo-principal">Voltar ao topo</a></p>
+        </div>
+    </footer>
+
+    <!-- ===================== PAINEL DE ACESSIBILIDADE (compartilhado) ===================== -->
+    <button class="botao-acessibilidade" id="a11y-botao-abrir" type="button" aria-haspopup="true" aria-expanded="false"
+        aria-controls="a11y-painel" aria-label="Abrir opções de acessibilidade">
+        <img src="/assets/images/icons/acessibilidade.png" alt="" class="icone-acessibilidade" aria-hidden="true" />
+    </button>
+
+    <section class="painel-acessibilidade" id="a11y-painel" aria-label="Opções de acessibilidade">
+        <button type="button" class="painel-detalhe__fechar" id="a11y-fechar"
+            aria-label="Fechar opções de acessibilidade" style="position:absolute;top:10px;right:10px;">✕</button>
+        <h2>Acessibilidade</h2>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Tamanho da fonte</span>
+            <div class="controle-fonte">
+                <button type="button" id="a11y-diminuir-fonte" aria-label="Diminuir fonte">A−</button>
+                <span id="a11y-valor-fonte">100%</span>
+                <button type="button" id="a11y-aumentar-fonte" aria-label="Aumentar fonte">A+</button>
+            </div>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <label class="interruptor" for="a11y-alto-contraste">
+                Alto contraste
+                <input type="checkbox" id="a11y-alto-contraste" />
+            </label>
+            <label class="interruptor" for="a11y-modo-daltonico">
+                Modo adaptado para daltonismo
+                <input type="checkbox" id="a11y-modo-daltonico" />
+            </label>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Leitura da página</span>
+            <button class="botao-ler-pagina" id="a11y-ler-pagina" type="button">🔊 Ouvir esta página</button>
+        </div>
+
+        <button class="botao-reiniciar" id="a11y-reiniciar" type="button">Redefinir preferências</button>
+    </section>
+
+    <script src="/assets/js/acessibilidade.js"></script>
+    <script src="/assets/js/carrinho-dados.js"></script>
+    <script src="/assets/js/carrinho.js"></script>
+</body>
+
+</html>

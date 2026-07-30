@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pibble Store — Produto</title>
+    <meta name="description" content="Detalhes do produto, avaliações e produtos relacionados." />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/acessibilidade.css" />
+</head>
+
+<body>
+
+    <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
+
+    <!-- ===================== CABEÇALHO ===================== -->
+    <header class="cabecalho">
+        <a href="comprador.html" class="cabecalho__marca">
+            <img src="/assets/images/icons/pibble-logo.png" alt="" class="logo-pibble" aria-hidden="true" />
+            Pibble Store
+        </a>
+
+        <form class="cabecalho__busca" role="search" aria-label="Buscar produtos" action="comprador.html">
+            <label for="campo-busca" style="position:absolute;left:-9999px;">Buscar produtos</label>
+            <input type="text" id="campo-busca" name="busca" placeholder="Buscar produtos..." autocomplete="off" />
+            <button type="submit" aria-label="Buscar">
+                <img src="/assets/images/icons/lupa.png" alt="" class="icone-navegacao" aria-hidden="true" />
+            </button>
+        </form>
+
+        <div class="cabecalho__acoes">
+            <a class="botao-cabecalho" href="carrinho.html" aria-label="Ver carrinho">
+                <img src="/assets/images/icons/carrinho.png" alt="" class="icone-navegacao" aria-hidden="true" />
+                Carrinho <span id="contador-carrinho">(0)</span>
+            </a>
+            <a class="botao-cabecalho botao-cabecalho--icone" href="usuario.html" aria-label="Minha conta">
+                <img src="/assets/images/icons/usuario.png" alt="" class="icone-navegacao" aria-hidden="true" />
+            </a>
+        </div>
+    </header>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+    <main id="conteudo-principal" class="conteudo">
+
+        <p class="trilha-navegacao">
+            <a href="comprador.html">Produtos</a> / <span id="trilha-categoria">Categoria</span>
+        </p>
+
+        <p class="estado-vazio" id="estado-carregando">Carregando produto...</p>
+        <p class="estado-vazio" id="estado-nao-encontrado" hidden>
+            Produto não encontrado. <a href="comprador.html">Voltar para a loja</a>
+        </p>
+
+        <div id="conteudo-produto" hidden>
+
+            <!-- ---------- Detalhe do produto ---------- -->
+            <section class="pagina-produto" aria-label="Detalhe do produto">
+                <div class="produto-imagem-principal" id="produto-imagem">📦</div>
+
+                <div class="produto-info">
+                    <p class="cartao-produto__categoria" id="produto-categoria"></p>
+                    <h1 id="produto-nome">Nome do produto</h1>
+
+                    <p class="produto-avaliacao">
+                        <span class="estrelas" id="produto-estrelas" aria-hidden="true">★★★★★</span>
+                        <span id="produto-avaliacao-texto">4.5 (0 avaliações)</span>
+                    </p>
+
+                    <span class="selo" id="produto-selo-estoque"></span>
+
+                    <p class="produto-preco" id="produto-preco">R$ 0,00</p>
+
+                    <p class="produto-descricao" id="produto-descricao">Descrição do produto.</p>
+
+                    <div class="campo" style="max-width:140px;">
+                        <label for="produto-quantidade">Quantidade</label>
+                        <input type="number" id="produto-quantidade" min="1" value="1" />
+                    </div>
+
+                    <div class="produto-acoes">
+                        <button type="button" class="botao botao--primario" id="botao-adicionar-carrinho">Adicionar ao
+                            carrinho</button>
+                        <button type="button" class="botao-icone-secundario" id="botao-favoritar" aria-pressed="false">
+                            <span aria-hidden="true">♡</span> Favoritar
+                        </button>
+                        <button type="button" class="botao-icone-secundario" id="botao-compartilhar">
+                            <span aria-hidden="true">🔗</span> Compartilhar
+                        </button>
+                    </div>
+                    <p class="mensagem-status" id="mensagem-status" aria-live="polite"></p>
+
+                    <!-- ---------- Avaliar produto ---------- -->
+                    <div class="bloco-avaliar">
+                        <h2>Avaliar este produto</h2>
+                        <div class="selecao-estrelas" id="selecao-estrelas" role="radiogroup"
+                            aria-label="Dar uma nota de 1 a 5 estrelas">
+                            <button type="button" data-nota="1" role="radio" aria-checked="false"
+                                aria-label="1 estrela">★</button>
+                            <button type="button" data-nota="2" role="radio" aria-checked="false"
+                                aria-label="2 estrelas">★</button>
+                            <button type="button" data-nota="3" role="radio" aria-checked="false"
+                                aria-label="3 estrelas">★</button>
+                            <button type="button" data-nota="4" role="radio" aria-checked="false"
+                                aria-label="4 estrelas">★</button>
+                            <button type="button" data-nota="5" role="radio" aria-checked="false"
+                                aria-label="5 estrelas">★</button>
+                        </div>
+                        <p class="mensagem-status" id="mensagem-avaliacao" aria-live="polite"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---------- Produtos relacionados ---------- -->
+            <section class="secao-relacionados" aria-label="Produtos relacionados">
+                <h2>Você também pode gostar</h2>
+                <div class="grade-produtos" id="grade-relacionados">
+                    <!-- Cartões de produtos relacionados inseridos aqui via JavaScript -->
+                </div>
+                <p class="estado-vazio" id="relacionados-vazio" hidden>Nenhum produto relacionado encontrado.</p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <div class="rodape__conteudo">
+            <p>Pibble Store — comprometida com uma experiência de compra para todas as pessoas.</p>
+            <p><a href="#conteudo-principal">Voltar ao topo</a></p>
+        </div>
+    </footer>
+
+    <!-- ===================== PAINEL DE ACESSIBILIDADE (compartilhado) ===================== -->
+    <button class="botao-acessibilidade" id="a11y-botao-abrir" type="button" aria-haspopup="true" aria-expanded="false"
+        aria-controls="a11y-painel" aria-label="Abrir opções de acessibilidade">
+        <img src="/assets/images/icons/acessibilidade.png" alt="" class="icone-acessibilidade" aria-hidden="true" />
+    </button>
+
+    <section class="painel-acessibilidade" id="a11y-painel" aria-label="Opções de acessibilidade">
+        <button type="button" class="painel-detalhe__fechar" id="a11y-fechar"
+            aria-label="Fechar opções de acessibilidade" style="position:absolute;top:10px;right:10px;">✕</button>
+        <h2>Acessibilidade</h2>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Tamanho da fonte</span>
+            <div class="controle-fonte">
+                <button type="button" id="a11y-diminuir-fonte" aria-label="Diminuir fonte">A−</button>
+                <span id="a11y-valor-fonte">100%</span>
+                <button type="button" id="a11y-aumentar-fonte" aria-label="Aumentar fonte">A+</button>
+            </div>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <label class="interruptor" for="a11y-alto-contraste">
+                Alto contraste
+                <input type="checkbox" id="a11y-alto-contraste" />
+            </label>
+            <label class="interruptor" for="a11y-modo-daltonico">
+                Modo adaptado para daltonismo
+                <input type="checkbox" id="a11y-modo-daltonico" />
+            </label>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Leitura da página</span>
+            <button class="botao-ler-pagina" id="a11y-ler-pagina" type="button">🔊 Ouvir esta página</button>
+        </div>
+
+        <button class="botao-reiniciar" id="a11y-reiniciar" type="button">Redefinir preferências</button>
+    </section>
+
+    <script src="/assets/js/acessibilidade.js"></script>
+    <script src="/assets/js/carrinho-dados.js"></script>
+    <script src="/assets/js/produto-dados.js"></script>
+    <script src="/assets/js/produto.js"></script>
+</body>
+
+</html>
