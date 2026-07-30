@@ -5,11 +5,11 @@
    - Permite alterar quantidade e remover produtos
    - Passo "Finalizar compra": mostra a recapitulação do
      pedido (produtos selecionados + valor total)
-   - Passo "Confirmar compra": simula o fechamento do pedido
+   - Passo "Confirmar pedido": persiste o pedido e seus itens
 
    >>> INTEGRAÇÃO COM O BACKEND <<<
-   finalizarPedido() usa POST/PATCH /carrinho. Os itens
-   continuam locais enquanto não existir endpoint de item_carrinho.
+   finalizarPedido() usa POST /pedido. O backend calcula os
+   valores e separa os itens por vendedor para consulta posterior.
    ========================================================= */
 
 (function () {
@@ -42,8 +42,8 @@
     const usuarioSalvo = localStorage.getItem(CHAVE_USUARIO_ID);
     if (usuarioSalvo && Number(usuarioSalvo) > 0) return Number(usuarioSalvo);
 
-    window.location.assign("login.html");
-    throw new Error("Faça login como comprador para finalizar a compra.");
+    window.location.assign("login.html?retorno=carrinho.html");
+    throw new Error("LOGIN_NECESSARIO");
   }
 
   function formatarPreco(valor) {
@@ -144,30 +144,26 @@
     document.getElementById("recapitulacao-total").textContent = formatarPreco(CarrinhoDados.totalValor(itens));
   }
 
-  // ---------- Confirmação do carrinho no backend ----------
+  // ---------- Confirmação e persistência do pedido no backend ----------
   async function finalizarPedido(itens, total) {
     if (!itens.length || total <= 0) {
       throw new Error("O carrinho está vazio.");
     }
 
     const usuarioId = await obterUsuarioId();
-    const carrinhos = await requisitar("/carrinho");
-    const carrinhoExistente = carrinhos.find(
-      (carrinho) => Number(carrinho.usuarioId) === usuarioId
-    );
-    const payload = { usuarioId, status: "finalizado" };
+    const payload = {
+      usuarioId,
+      itens: itens.map((item) => ({
+        produtoId: item.id,
+        quantidade: item.quantidade,
+      })),
+    };
 
-    // A API atual ainda não expõe endpoints de item_carrinho.
-    // Por isso os itens continuam no navegador e o servidor registra
-    // apenas a criação/finalização do carrinho do usuário.
-    return requisitar(
-      carrinhoExistente ? `/carrinho/${carrinhoExistente.id}` : "/carrinho",
-      {
-        method: carrinhoExistente ? "PATCH" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }
-    );
+    return requisitar("/pedido", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -191,15 +187,17 @@
       botao.textContent = "Confirmando...";
 
       try {
-        await finalizarPedido(itens, total);
+        const pedido = await finalizarPedido(itens, total);
         CarrinhoDados.limparCarrinho();
+        document.getElementById("numero-pedido").textContent = `Pedido #${pedido.id}`;
         mostrarPasso("passo-confirmacao");
       } catch (erro) {
+        if (erro.message === "LOGIN_NECESSARIO") return;
         console.error("Não foi possível finalizar a compra.", erro);
         alert("Não foi possível finalizar a compra. Tente novamente.");
       } finally {
         botao.disabled = false;
-        botao.textContent = "Confirmar compra";
+        botao.textContent = "Confirmar pedido";
       }
     });
   });

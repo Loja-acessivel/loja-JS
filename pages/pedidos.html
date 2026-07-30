@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pibble Store — Pedidos recebidos</title>
+  <meta name="description" content="Pedidos recebidos pelos produtos do vendedor." />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/acessibilidade.css" />
+</head>
+
+<body>
+  <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
+
+  <header class="cabecalho">
+    <a href="vendedor.html" class="cabecalho__marca">
+      <img src="/assets/images/icons/pibble-logo.png" alt="" class="logo-pibble" aria-hidden="true" />
+      Pibble Store
+    </a>
+
+    <div class="cabecalho__acoes" style="margin-left:auto;">
+      <a class="botao-cabecalho" href="vendedor.html">Meus produtos</a>
+      <a class="botao-cabecalho" href="comprador.html">Ver como comprador</a>
+      <a class="botao-cabecalho botao-cabecalho--icone" href="usuario.html" aria-label="Minha conta">
+        <img src="/assets/images/icons/usuario.png" alt="" class="icone-navegacao" aria-hidden="true" />
+      </a>
+    </div>
+  </header>
+
+  <div class="faixa-pagina">
+    <h1>Pedidos recebidos</h1>
+    <p>Acompanhe os pedidos que possuem produtos da sua loja e entre em contato com os compradores.</p>
+  </div>
+
+  <main id="conteudo-principal" class="conteudo">
+    <section class="grade-resumo" aria-label="Resumo dos pedidos">
+      <div class="cartao-resumo">
+        <p class="cartao-resumo__rotulo">Total de pedidos</p>
+        <p class="cartao-resumo__valor" id="resumo-pedidos-total">0</p>
+      </div>
+      <div class="cartao-resumo">
+        <p class="cartao-resumo__rotulo">Aguardando contato</p>
+        <p class="cartao-resumo__valor" id="resumo-pedidos-recebidos">0</p>
+      </div>
+      <div class="cartao-resumo">
+        <p class="cartao-resumo__rotulo">Compradores</p>
+        <p class="cartao-resumo__valor" id="resumo-pedidos-compradores">0</p>
+      </div>
+    </section>
+
+    <p class="estado-vazio" id="estado-pedidos">Carregando pedidos...</p>
+    <section class="lista-pedidos-vendedor" id="lista-pedidos-vendedor" aria-live="polite"
+      aria-label="Lista de pedidos recebidos" hidden>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo">
+      <p>Pibble Store — painel de pedidos do vendedor.</p>
+      <p><a href="#conteudo-principal">Voltar ao topo</a></p>
+    </div>
+  </footer>
+
+  <button class="botao-acessibilidade" id="a11y-botao-abrir" type="button" aria-haspopup="true"
+    aria-expanded="false" aria-controls="a11y-painel" aria-label="Abrir opções de acessibilidade">
+    <img src="/assets/images/icons/acessibilidade.png" alt="" class="icone-acessibilidade" aria-hidden="true" />
+  </button>
+
+  <section class="painel-acessibilidade" id="a11y-painel" aria-label="Opções de acessibilidade">
+    <button type="button" class="painel-detalhe__fechar" id="a11y-fechar"
+      aria-label="Fechar opções de acessibilidade" style="position:absolute;top:10px;right:10px;">✕</button>
+    <h2>Acessibilidade</h2>
+
+    <div class="opcao-acessibilidade">
+      <span class="rotulo">Tamanho da fonte</span>
+      <div class="controle-fonte">
+        <button type="button" id="a11y-diminuir-fonte" aria-label="Diminuir fonte">A−</button>
+        <span id="a11y-valor-fonte">100%</span>
+        <button type="button" id="a11y-aumentar-fonte" aria-label="Aumentar fonte">A+</button>
+      </div>
+    </div>
+
+    <div class="opcao-acessibilidade">
+      <label class="interruptor" for="a11y-alto-contraste">
+        Alto contraste
+        <input type="checkbox" id="a11y-alto-contraste" />
+      </label>
+      <label class="interruptor" for="a11y-modo-daltonico">
+        Modo adaptado para daltonismo
+        <input type="checkbox" id="a11y-modo-daltonico" />
+      </label>
+    </div>
+
+    <div class="opcao-acessibilidade">
+      <span class="rotulo">Leitura da página</span>
+      <button class="botao-ler-pagina" id="a11y-ler-pagina" type="button">🔊 Ouvir esta página</button>
+    </div>
+
+    <button class="botao-reiniciar" id="a11y-reiniciar" type="button">Redefinir preferências</button>
+  </section>
+
+  <script src="/assets/js/acessibilidade.js"></script>
+  <script src="/assets/js/pedidos.js"></script>
+</body>
+
+</html>

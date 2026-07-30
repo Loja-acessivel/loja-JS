@@ -47,15 +47,24 @@ const ProdutosDados = (function () {
         return resposta.json();
     }
 
-    async function obterImagemPrincipal(produtoId) {
+    async function obterImagensProduto(produtoId) {
         try {
             const imagens = await requisitar(`/imagens/produto/${encodeURIComponent(produtoId)}`);
-            const principal = imagens.find((imagem) => imagem.principal) || imagens[0];
-            return principal?.url || "";
+            return imagens.sort((a, b) => {
+                const ordemA = Number(a.ordem) || 0;
+                const ordemB = Number(b.ordem) || 0;
+                return ordemA - ordemB || Number(a.id) - Number(b.id);
+            });
         } catch (erro) {
-            console.warn(`Não foi possível carregar a imagem do produto ${produtoId}.`, erro);
-            return "";
+            console.warn(`Não foi possível carregar as imagens do produto ${produtoId}.`, erro);
+            return [];
         }
+    }
+
+    async function obterImagemPrincipal(produtoId) {
+        const imagens = await obterImagensProduto(produtoId);
+        const principal = imagens.find((imagem) => imagem.principal) || imagens[0];
+        return principal?.url || "";
     }
 
     function normalizarProduto(produto, imagemUrl) {
@@ -92,28 +101,34 @@ const ProdutosDados = (function () {
     async function obterProdutoPorId(id) {
         try {
             const produto = await requisitar(`/produto/${encodeURIComponent(id)}`);
-            const imagemUrl = await obterImagemPrincipal(produto.id);
-            return normalizarProduto(produto, imagemUrl);
+            const imagens = await obterImagensProduto(produto.id);
+            const principal = imagens.find((imagem) => imagem.principal) || imagens[0];
+            return {
+                ...normalizarProduto(produto, principal?.url || ""),
+                imagens,
+            };
         } catch (erro) {
             if (erro.message.includes("Erro 404")) return null;
             throw erro;
         }
     }
 
-    // Produtos relacionados: mesma categoria OU nome parecido
-    // (ex.: se o produto atual é "Garrafa Térmica 1L", qualquer
-    // produto cujo nome contenha "garrafa" também é considerado).
+    // Recomendações da mesma categoria do produto atual.
     function obterRelacionados(produtoAtual, produtos) {
-        const primeiraPalavra = produtoAtual.nome.split(" ")[0].toLowerCase();
+        const categoriaAtual = produtoAtual.categoria.trim().toLocaleLowerCase("pt-BR");
 
         return produtos.filter((p) => {
             if (p.id === produtoAtual.id) return false;
             if (p.status !== "ativo") return false;
-            const mesmaCategoria = p.categoria === produtoAtual.categoria;
-            const nomeParecido = p.nome.toLowerCase().includes(primeiraPalavra);
-            return mesmaCategoria || nomeParecido;
-        });
+            return p.categoria.trim().toLocaleLowerCase("pt-BR") === categoriaAtual;
+        }).slice(0, 4);
     }
 
-    return { obterProdutos, obterProdutoPorId, obterRelacionados, formatarPreco };
+    return {
+        obterProdutos,
+        obterProdutoPorId,
+        obterImagensProduto,
+        obterRelacionados,
+        formatarPreco,
+    };
 })();

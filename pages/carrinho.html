@@ -62,7 +62,7 @@
                         <span>Total</span>
                         <span id="resumo-total">R$ 0,00</span>
                     </div>
-                    <button class="botao botao--primario" id="botao-comprar">Finalizar compra</button>
+                    <button class="botao botao--primario" id="botao-comprar">Finalizar pedido</button>
                 </aside>
             </div>
         </section>
@@ -72,7 +72,7 @@
             <div class="painel-detalhe" style="max-width:640px;margin:0 auto;padding:24px;">
                 <h2>Revise seu pedido</h2>
                 <p style="color:var(--texto-secundario);margin-top:0;">
-                    Confira os produtos e o valor total antes de confirmar a compra.
+                    Confira os produtos e o valor estimado antes de enviar o pedido. Nenhum pagamento será realizado agora.
                 </p>
 
                 <div class="recapitulacao__lista" id="recapitulacao-lista">
@@ -80,12 +80,12 @@
                 </div>
 
                 <div class="resumo-linha resumo-linha--total">
-                    <span>Total a pagar</span>
+                    <span>Total estimado</span>
                     <span id="recapitulacao-total">R$ 0,00</span>
                 </div>
 
                 <div class="linha-acoes">
-                    <button class="botao botao--primario" id="botao-confirmar-compra">Confirmar compra</button>
+                    <button class="botao botao--primario" id="botao-confirmar-compra">Confirmar pedido</button>
                     <button class="botao botao--secundario" id="botao-voltar-carrinho">Voltar ao carrinho</button>
                 </div>
             </div>
@@ -96,7 +96,9 @@
             <div class="confirmacao-pedido">
                 <div class="icone-sucesso" aria-hidden="true">✓</div>
                 <h2>Pedido confirmado!</h2>
-                <p>Recebemos sua compra e ela já está sendo preparada.</p>
+                <p class="confirmacao-pedido__numero" id="numero-pedido"></p>
+                <p>Obrigado pelo pedido! O Vendedor entrará em contato com você nas próximas 24 horas para acertar os
+                    valores e local de entrega!</p>
                 <p><a class="botao botao--primario" href="comprador.html"
                         style="display:inline-flex;text-decoration:none;">Voltar à loja</a></p>
             </div>
