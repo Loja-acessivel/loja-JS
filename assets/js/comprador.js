@@ -25,8 +25,6 @@
 (function () {
   "use strict";
 
-  let produtoSelecionado = null;
-
   // ---------- Produtos fornecidos pela API ----------
   async function obterProdutos() {
     return ProdutosDados.obterProdutos();
@@ -45,8 +43,8 @@
   }
 
   function criarCartaoProduto(produto) {
-    const cartao = document.createElement("button");
-    cartao.type = "button";
+    const cartao = document.createElement("a");
+    cartao.href = `produto.html?id=${encodeURIComponent(produto.id)}`;
     cartao.className = "cartao-produto";
     cartao.setAttribute("aria-label", `Ver detalhes de ${produto.nome}, ${formatarPreco(produto.preco)}`);
     cartao.innerHTML = `
@@ -60,7 +58,10 @@
         <p class="cartao-produto__preco">${formatarPreco(produto.preco)}</p>
       </div>
     `;
-    cartao.addEventListener("click", () => abrirDetalhe(produto));
+    const imagem = cartao.querySelector(".cartao-produto__imagem img");
+    imagem?.addEventListener("error", () => {
+      imagem.parentElement.textContent = "📦";
+    }, { once: true });
     return cartao;
   }
 
@@ -118,29 +119,6 @@
     contagem.textContent = `${lista.length} produto(s)`;
   }
 
-  // ---------- Tela de detalhe ----------
-  function abrirDetalhe(produto) {
-    produtoSelecionado = produto;
-
-    document.getElementById("detalhe-categoria").textContent = produto.categoria;
-    document.getElementById("detalhe-nome").textContent = produto.nome;
-    document.getElementById("detalhe-preco").textContent = formatarPreco(produto.preco);
-    document.getElementById("detalhe-descricao").textContent = produto.descricao;
-    document.getElementById("detalhe-quantidade").value = 1;
-
-    const imagem = document.getElementById("detalhe-imagem");
-    imagem.innerHTML = produto.imagemUrl ? `<img src="${produto.imagemUrl}" alt="${produto.nome}" />` : "📦";
-
-    const sobreposicao = document.getElementById("sobreposicao-detalhe");
-    sobreposicao.classList.add("aberta");
-    document.getElementById("fechar-detalhe").focus();
-  }
-
-  function fecharDetalhe() {
-    document.getElementById("sobreposicao-detalhe").classList.remove("aberta");
-    produtoSelecionado = null;
-  }
-
   function atualizarContadorCarrinho() {
     document.getElementById("contador-carrinho").textContent = `(${CarrinhoDados.totalItens()})`;
   }
@@ -165,25 +143,5 @@
     document.getElementById("campo-busca").addEventListener("input", renderizarGrade);
     document.querySelector(".cabecalho__busca").addEventListener("submit", (e) => e.preventDefault());
 
-    // Delegação de evento: QUALQUER botão marcado com [data-fechar-modal]
-    // fecha o pop-up, mesmo que novos botões sejam adicionados depois.
-    document.addEventListener("click", function (evento) {
-      if (evento.target.closest("[data-fechar-modal]")) {
-        fecharDetalhe();
-      }
-    });
-    document.getElementById("sobreposicao-detalhe").addEventListener("click", function (evento) {
-      if (evento.target === this) fecharDetalhe();
-    });
-    document.addEventListener("keydown", function (evento) {
-      if (evento.key === "Escape") fecharDetalhe();
-    });
-
-    document.getElementById("detalhe-adicionar-carrinho").addEventListener("click", function () {
-      const quantidade = Math.max(1, parseInt(document.getElementById("detalhe-quantidade").value, 10) || 1);
-      CarrinhoDados.adicionarAoCarrinho(produtoSelecionado, quantidade);
-      atualizarContadorCarrinho();
-      fecharDetalhe();
-    });
   });
 })();

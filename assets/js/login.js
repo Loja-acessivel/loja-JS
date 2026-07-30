@@ -78,7 +78,10 @@
     }
 
     function redirecionar(conta) {
-        window.location.assign(conta.tipo === "vendedor" ? "vendedor.html" : "comprador.html");
+        const retorno = new URLSearchParams(window.location.search).get("retorno");
+        const retornoPermitido = retorno === "carrinho.html" ? retorno : null;
+        const destinoComprador = retornoPermitido || "comprador.html";
+        window.location.assign(conta.tipo === "vendedor" ? "vendedor.html" : destinoComprador);
     }
 
     if (formularioLogin) {

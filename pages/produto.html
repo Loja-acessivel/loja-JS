@@ -56,7 +56,14 @@
 
             <!-- ---------- Detalhe do produto ---------- -->
             <section class="pagina-produto" aria-label="Detalhe do produto">
-                <div class="produto-imagem-principal" id="produto-imagem">📦</div>
+                <div class="produto-galeria">
+                    <div class="produto-imagem-principal" id="produto-imagem">
+                        <span class="produto-imagem-vazia" aria-hidden="true">📦</span>
+                    </div>
+                    <div class="produto-miniaturas" id="produto-miniaturas" aria-label="Outras imagens do produto">
+                        <!-- Miniaturas inseridas via JavaScript -->
+                    </div>
+                </div>
 
                 <div class="produto-info">
                     <p class="cartao-produto__categoria" id="produto-categoria"></p>
@@ -81,11 +88,13 @@
                     <div class="produto-acoes">
                         <button type="button" class="botao botao--primario" id="botao-adicionar-carrinho">Adicionar ao
                             carrinho</button>
+                        <a class="botao botao--secundario botao-ver-carrinho" href="carrinho.html"
+                            id="botao-ver-carrinho">Ver no carrinho</a>
                         <button type="button" class="botao-icone-secundario" id="botao-favoritar" aria-pressed="false">
                             <span aria-hidden="true">♡</span> Favoritar
                         </button>
                         <button type="button" class="botao-icone-secundario" id="botao-compartilhar">
-                            <span aria-hidden="true">🔗</span> Compartilhar
+                            <span aria-hidden="true"></span> Compartilhar
                         </button>
                     </div>
                     <p class="mensagem-status" id="mensagem-status" aria-live="polite"></p>
@@ -113,7 +122,7 @@
 
             <!-- ---------- Produtos relacionados ---------- -->
             <section class="secao-relacionados" aria-label="Produtos relacionados">
-                <h2>Você também pode gostar</h2>
+                <h2 id="titulo-relacionados">Mais produtos desta categoria</h2>
                 <div class="grade-produtos" id="grade-relacionados">
                     <!-- Cartões de produtos relacionados inseridos aqui via JavaScript -->
                 </div>
