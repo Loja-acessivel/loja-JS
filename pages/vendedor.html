@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pibble Store — Área do Vendedor</title>
+  <meta name="description" content="Painel do vendedor com recursos de acessibilidade." />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/acessibilidade.css" />
+</head>
+
+<body>
+
+  <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
+
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="cabecalho">
+    <a href="vendedor.html" class="cabecalho__marca">
+      <img src="/assets/images/icons/pibble-logo.png" alt="" class="logo-pibble" aria-hidden="true" />
+      Pibble Store
+    </a>
+
+    <div class="cabecalho__acoes" style="margin-left:auto;">
+      <a class="botao-cabecalho" href="comprador.html">Ver como comprador</a>
+      <a class="botao-cabecalho botao-cabecalho--icone" href="usuario.html" aria-label="Minha conta">
+        <img src="/assets/images/icons/usuario.png" alt="" class="icone-navegacao" aria-hidden="true" />
+      </a>
+    </div>
+  </header>
+
+  <div class="faixa-pagina">
+    <h1>Meus produtos</h1>
+    <p>Gerencie os produtos que aparecem na sua loja.</p>
+  </div>
+
+  <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+  <main id="conteudo-principal" class="conteudo">
+
+    <!-- Resumo rápido do vendedor -->
+    <section class="grade-resumo" aria-label="Resumo da loja">
+      <div class="cartao-resumo">
+        <p class="cartao-resumo__rotulo">Produtos cadastrados</p>
+        <p class="cartao-resumo__valor" id="resumo-total">0</p>
+      </div>
+      <div class="cartao-resumo">
+        <p class="cartao-resumo__rotulo">Produtos ativos</p>
+        <p class="cartao-resumo__valor" id="resumo-ativos">0</p>
+      </div>
+      <div class="cartao-resumo">
+        <p class="cartao-resumo__rotulo">Estoque baixo</p>
+        <p class="cartao-resumo__valor" id="resumo-baixo-estoque">0</p>
+      </div>
+    </section>
+
+    <div class="barra-filtros">
+      <label for="filtro-status" style="font-weight:700;font-size:.9rem;">Status:</label>
+      <select id="filtro-status">
+        <option value="todos">Todos</option>
+        <option value="ativo">Ativos</option>
+        <option value="inativo">Inativos</option>
+      </select>
+
+      <span class="contagem" id="contagem-produtos" aria-live="polite"></span>
+    </div>
+
+    <!-- Grade de produtos do vendedor: gerada dinamicamente por js/vendedor.js -->
+    <section class="grade-produtos" id="grade-produtos" aria-live="polite" aria-label="Lista dos meus produtos">
+      <!-- Cartões de produto inseridos aqui via JavaScript -->
+      <!-- O último cartão (fixo) é o de "Adicionar novo produto" -->
+    </section>
+
+    <p class="estado-vazio" id="estado-vazio" hidden>
+      Nenhum produto encontrado com o filtro selecionado.
+    </p>
+  </main>
+
+  <!-- ===================== TELA DE GERENCIAMENTO DO PRODUTO ===================== -->
+  <div class="sobreposicao" id="sobreposicao-detalhe">
+    <div class="painel-detalhe" role="dialog" aria-modal="true" aria-labelledby="detalhe-titulo">
+      <button type="button" class="painel-detalhe__fechar" id="fechar-detalhe" data-fechar-modal
+        aria-label="Fechar gerenciamento do produto">✕</button>
+
+      <h2 id="detalhe-titulo">Gerenciar produto</h2>
+
+      <div class="painel-detalhe__grade">
+        <section class="gerenciador-imagens" aria-labelledby="titulo-imagens-produto">
+          <div class="gerenciador-imagens__cabecalho">
+            <h3 id="titulo-imagens-produto">Imagens do produto</h3>
+            <span>Escolha uma como principal</span>
+          </div>
+
+          <div class="zona-upload" id="zona-upload-imagens" role="button" tabindex="0"
+            aria-controls="campo-imagens" aria-label="Adicionar imagens ao produto">
+            <input type="file" id="campo-imagens" accept="image/png,image/jpeg,image/webp" multiple hidden />
+            <span class="zona-upload__simbolo" aria-hidden="true">+</span>
+            <strong>Arraste as imagens aqui</strong>
+            <span>ou clique para selecionar</span>
+            <small>PNG, JPG ou WebP de até 10 MB</small>
+          </div>
+
+          <p class="mensagem-imagens" id="mensagem-imagens" role="status" aria-live="polite"></p>
+          <div class="grade-miniaturas" id="grade-miniaturas" aria-live="polite"></div>
+        </section>
+
+        <div>
+          <div class="campo">
+            <label for="campo-nome">Nome do produto</label>
+            <input type="text" id="campo-nome" />
+          </div>
+
+          <div class="campo">
+            <label for="campo-categoria">Categoria</label>
+            <input type="text" id="campo-categoria" />
+          </div>
+
+          <div class="campo">
+            <label for="campo-preco">Preço (R$)</label>
+            <input type="number" id="campo-preco" min="0" step="0.01" />
+          </div>
+
+          <div class="campo">
+            <label for="campo-estoque">Quantidade em estoque</label>
+            <input type="number" id="campo-estoque" min="0" />
+          </div>
+
+          <div class="campo">
+            <label for="campo-status">Status</label>
+            <select id="campo-status">
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="campo-descricao">Descrição</label>
+        <textarea id="campo-descricao" rows="3"></textarea>
+      </div>
+
+      <div class="linha-acoes">
+        <button type="button" class="botao botao--primario" id="salvar-produto">Salvar alterações</button>
+        <button type="button" class="botao botao--perigo" id="excluir-produto">Excluir produto</button>
+        <button type="button" class="botao botao--secundario" id="cancelar-produto" data-fechar-modal>Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo">
+      <p>Pibble Store — painel do vendedor.</p>
+      <p><a href="#conteudo-principal">Voltar ao topo</a></p>
+    </div>
+  </footer>
+
+  <!-- ===================== PAINEL DE ACESSIBILIDADE (compartilhado) ===================== -->
+  <button class="botao-acessibilidade" id="a11y-botao-abrir" type="button" aria-haspopup="true" aria-expanded="false"
+    aria-controls="a11y-painel" aria-label="Abrir opções de acessibilidade">
+    <img src="/assets/images/icons/acessibilidade.png" alt="" class="icone-acessibilidade" aria-hidden="true" />
+  </button>
+
+  <section class="painel-acessibilidade" id="a11y-painel" aria-label="Opções de acessibilidade">
+    <button type="button" class="painel-detalhe__fechar" id="a11y-fechar" aria-label="Fechar opções de acessibilidade"
+      style="position:absolute;top:10px;right:10px;">✕</button>
+    <h2>Acessibilidade</h2>
+
+    <div class="opcao-acessibilidade">
+      <span class="rotulo">Tamanho da fonte</span>
+      <div class="controle-fonte">
+        <button type="button" id="a11y-diminuir-fonte" aria-label="Diminuir fonte">A−</button>
+        <span id="a11y-valor-fonte">100%</span>
+        <button type="button" id="a11y-aumentar-fonte" aria-label="Aumentar fonte">A+</button>
+      </div>
+    </div>
+
+    <div class="opcao-acessibilidade">
+      <label class="interruptor" for="a11y-alto-contraste">
+        Alto contraste
+        <input type="checkbox" id="a11y-alto-contraste" />
+      </label>
+      <label class="interruptor" for="a11y-modo-daltonico">
+        Modo adaptado para daltonismo
+        <input type="checkbox" id="a11y-modo-daltonico" />
+      </label>
+    </div>
+
+    <div class="opcao-acessibilidade">
+      <span class="rotulo">Leitura da página</span>
+      <button class="botao-ler-pagina" id="a11y-ler-pagina" type="button">🔊 Ouvir esta página</button>
+    </div>
+
+    <button class="botao-reiniciar" id="a11y-reiniciar" type="button">Redefinir preferências</button>
+  </section>
+
+  <script src="/assets/js/acessibilidade.js"></script>
+  <script src="/assets/js/vendedor.js"></script>
+</body>
+
+</html>

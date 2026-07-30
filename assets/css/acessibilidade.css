@@ -1,0 +1,240 @@
+/* =========================================================
+   ACESSIBILIDADE
+   - Botão flutuante + painel de opções
+   - Alto contraste
+   - Modo adaptado para daltonismo
+   - Leitura da página (feedback visual do botão "ouvir")
+   ========================================================= */
+
+/* ---------- Botão flutuante ---------- */
+.botao-acessibilidade {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 300;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--azul-900);
+  color: var(--branco);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botao-acessibilidade:hover {
+  background: #16296b;
+}
+
+.icone-acessibilidade {
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+}
+
+/* ---------- Painel ---------- */
+.painel-acessibilidade {
+  position: fixed;
+  right: 20px;
+  bottom: 86px;
+  z-index: 300;
+  width: 300px;
+  max-width: calc(100vw - 40px);
+  background: var(--branco);
+  border-radius: var(--raio);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  padding: 18px;
+  display: none;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.painel-acessibilidade.aberto {
+  display: block;
+}
+
+.painel-acessibilidade h2 {
+  font-size: 1.05rem;
+  margin: 0 0 12px 0;
+  color: var(--azul-900);
+}
+
+.opcao-acessibilidade {
+  margin-bottom: 16px;
+}
+
+.opcao-acessibilidade legend,
+.opcao-acessibilidade > span.rotulo {
+  font-weight: 700;
+  font-size: 0.88rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.controle-fonte {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controle-fonte button {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--cinza-300);
+  background: var(--cinza-100);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.controle-fonte span {
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+  min-width: 42px;
+  text-align: center;
+}
+
+.interruptor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.interruptor input[type="checkbox"] {
+  width: 40px;
+  height: 22px;
+  accent-color: var(--azul-700);
+  cursor: pointer;
+}
+
+.painel-acessibilidade select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--cinza-300);
+}
+
+.botao-ler-pagina {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: var(--azul-700);
+  color: var(--branco);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.botao-ler-pagina:hover {
+  background: var(--azul-900);
+}
+
+.botao-ler-pagina.lendo {
+  background: var(--erro);
+}
+
+.botao-reiniciar {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--cinza-300);
+  background: var(--branco);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   ALTO CONTRASTE
+   ========================================================= */
+body.alto-contraste {
+  --azul-900: #000000;
+  --azul-700: #0a0aff;
+  --azul-600: #0a0aff;
+  --azul-500: #0a0aff;
+  --azul-100: #ffffff;
+  --azul-50: #ffffff;
+  --texto-principal: #000000;
+  --texto-secundario: #000000;
+  --branco: #ffffff;
+  --cinza-100: #ffffff;
+  --cinza-200: #000000;
+  --cinza-300: #000000;
+  background: #ffffff;
+}
+
+body.alto-contraste .cartao-produto,
+body.alto-contraste .cartao-resumo,
+body.alto-contraste .painel-detalhe {
+  border: 2px solid #000000;
+}
+
+body.alto-contraste a {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   MODO ADAPTADO PARA DALTONISMO
+   Em vez de "simular" a visão, trocamos indicadores que
+   dependem só de cor (verde/vermelho) por combinações
+   azul/laranja + ícones e texto, garantindo leitura sem
+   depender da percepção de cor.
+   ========================================================= */
+body.modo-daltonico .selo--ativo {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+body.modo-daltonico .selo--ativo::before {
+  content: "✓ ";
+}
+
+body.modo-daltonico .selo--baixo-estoque {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+body.modo-daltonico .selo--baixo-estoque::before {
+  content: "⚠ ";
+}
+
+body.modo-daltonico .selo--inativo {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+body.modo-daltonico .selo--inativo::before {
+  content: "✕ ";
+}
+
+body.modo-daltonico .botao--perigo {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+body.modo-daltonico .botao--primario {
+  background: #1d4ed8;
+}
+
+/* Padrão diagonal adicional nos selos de estoque baixo/inativo,
+   reforçando a distinção sem depender só da cor */
+body.modo-daltonico .selo--baixo-estoque,
+body.modo-daltonico .selo--inativo {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.06),
+    rgba(0, 0, 0, 0.06) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}

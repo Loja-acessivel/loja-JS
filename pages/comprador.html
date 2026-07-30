@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pibble Store — Área do Comprador</title>
+    <meta name="description" content="Vitrine de produtos com recursos de acessibilidade." />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/acessibilidade.css" />
+</head>
+
+<body>
+
+    <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
+
+    <!-- ===================== CABEÇALHO ===================== -->
+    <header class="cabecalho">
+        <a href="comprador.html" class="cabecalho__marca">
+            <img src="/assets/images/icons/pibble-logo.png" alt="" class="logo-pibble" aria-hidden="true" />
+            Pibble Store
+        </a>
+
+        <form class="cabecalho__busca" role="search" aria-label="Buscar produtos">
+            <label for="campo-busca" class="visually-hidden" style="position:absolute;left:-9999px;">Buscar
+                produtos</label>
+            <input type="text" id="campo-busca" placeholder="Buscar produtos..." autocomplete="off" />
+            <button type="submit" aria-label="Buscar">
+                <img src="/assets/images/icons/lupa.png" alt="" class="icone-navegacao" aria-hidden="true" />
+            </button>
+        </form>
+
+        <div class="cabecalho__acoes">
+            <a class="botao-cabecalho" href="vendedor.html">Área do vendedor</a>
+            <a class="botao-cabecalho" id="botao-carrinho" href="carrinho.html" aria-label="Ver carrinho">
+                <img src="/assets/images/icons/carrinho.png" alt="" class="icone-navegacao" aria-hidden="true" />
+                Carrinho <span id="contador-carrinho">(0)</span>
+            </a>
+            <a class="botao-cabecalho botao-cabecalho--icone" href="usuario.html" aria-label="Minha conta">
+                <img src="/assets/images/icons/usuario.png" alt="" class="icone-navegacao" aria-hidden="true" />
+            </a>
+        </div>
+    </header>
+
+    <div class="faixa-pagina">
+        <h1>Produtos</h1>
+        <p>Encontre e compre produtos com uma experiência pensada para todos.</p>
+    </div>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+    <main id="conteudo-principal" class="conteudo">
+
+        <div class="barra-filtros">
+            <label for="filtro-categoria" style="font-weight:700;font-size:.9rem;">Categoria:</label>
+            <select id="filtro-categoria">
+                <option value="todas">Todas</option>
+            </select>
+
+            <label for="filtro-ordenar" style="font-weight:700;font-size:.9rem;">Ordenar por:</label>
+            <select id="filtro-ordenar">
+                <option value="relevancia">Relevância</option>
+                <option value="menor-preco">Menor preço</option>
+                <option value="maior-preco">Maior preço</option>
+                <option value="nome">Nome (A-Z)</option>
+            </select>
+
+            <span class="contagem" id="contagem-produtos" aria-live="polite"></span>
+        </div>
+
+        <!-- Grade de produtos: gerada dinamicamente por js/comprador.js -->
+        <section class="grade-produtos" id="grade-produtos" aria-live="polite" aria-label="Lista de produtos">
+            <!-- Cartões de produto inseridos aqui via JavaScript -->
+        </section>
+
+        <p class="estado-vazio" id="estado-vazio" hidden>
+            Nenhum produto encontrado com os filtros selecionados.
+        </p>
+    </main>
+
+    <footer class="rodape">
+        <div class="rodape__conteudo">
+            <p>Pibble Store — comprometida com uma experiência de compra para todas as pessoas.</p>
+            <p><a href="#conteudo-principal">Voltar ao topo</a></p>
+        </div>
+    </footer>
+
+    <!-- ===================== PAINEL DE ACESSIBILIDADE (compartilhado) ===================== -->
+    <button class="botao-acessibilidade" id="a11y-botao-abrir" type="button" aria-haspopup="true" aria-expanded="false"
+        aria-controls="a11y-painel" aria-label="Abrir opções de acessibilidade">
+        <img src="/assets/images/icons/acessibilidade.png" alt="" class="icone-acessibilidade" aria-hidden="true" />
+    </button>
+
+    <section class="painel-acessibilidade" id="a11y-painel" aria-label="Opções de acessibilidade">
+        <button type="button" class="painel-detalhe__fechar" id="a11y-fechar"
+            aria-label="Fechar opções de acessibilidade" style="position:absolute;top:10px;right:10px;">✕</button>
+        <h2>Acessibilidade</h2>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Tamanho da fonte</span>
+            <div class="controle-fonte">
+                <button type="button" id="a11y-diminuir-fonte" aria-label="Diminuir fonte">A−</button>
+                <span id="a11y-valor-fonte">100%</span>
+                <button type="button" id="a11y-aumentar-fonte" aria-label="Aumentar fonte">A+</button>
+            </div>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <label class="interruptor" for="a11y-alto-contraste">
+                Alto contraste
+                <input type="checkbox" id="a11y-alto-contraste" />
+            </label>
+            <label class="interruptor" for="a11y-modo-daltonico">
+                Modo adaptado para daltonismo
+                <input type="checkbox" id="a11y-modo-daltonico" />
+            </label>
+        </div>
+
+        <div class="opcao-acessibilidade">
+            <span class="rotulo">Leitura da página</span>
+            <button class="botao-ler-pagina" id="a11y-ler-pagina" type="button">🔊 Ouvir esta página</button>
+        </div>
+
+        <button class="botao-reiniciar" id="a11y-reiniciar" type="button">Redefinir preferências</button>
+    </section>
+
+    <script src="/assets/js/acessibilidade.js"></script>
+    <script src="/assets/js/carrinho-dados.js"></script>
+    <script src="/assets/js/produto-dados.js"></script>
+    <script src="/assets/js/comprador.js"></script>
+</body>
+
+</html>
