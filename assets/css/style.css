@@ -1190,6 +1190,21 @@ select:focus-visible,
 /* =========================================================
    PEDIDOS DO VENDEDOR
    ========================================================= */
+.pagina-pedidos {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 10rem;
+  box-sizing: border-box;
+}
+
+.pagina-pedidos > .rodape {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin-top: 0;
+}
+
 .lista-pedidos-vendedor {
   display: grid;
   gap: 18px;
