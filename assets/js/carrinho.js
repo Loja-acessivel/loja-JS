@@ -152,7 +152,7 @@
 
     const usuarioId = await obterUsuarioId();
     const payload = {
-      usuarioId,
+      compradorId: usuarioId,
       itens: itens.map((item) => ({
         produtoId: item.id,
         quantidade: item.quantidade,
@@ -187,9 +187,11 @@
       botao.textContent = "Confirmando...";
 
       try {
-        const pedido = await finalizarPedido(itens, total);
+        const pedidos = await finalizarPedido(itens, total);
         CarrinhoDados.limparCarrinho();
-        document.getElementById("numero-pedido").textContent = `Pedido #${pedido.id}`;
+        document.getElementById("numero-pedido").textContent = pedidos.length === 1
+          ? `Pedido #${pedidos[0].id}`
+          : `${pedidos.length} produtos registrados no pedido`;
         mostrarPasso("passo-confirmacao");
       } catch (erro) {
         if (erro.message === "LOGIN_NECESSARIO") return;

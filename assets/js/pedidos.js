@@ -61,7 +61,7 @@
 
     const cabecalho = criarElemento("header", "pedido-vendedor__cabecalho");
     const identificacao = document.createElement("div");
-    identificacao.appendChild(criarElemento("h2", "", `Pedido #${pedido.pedidoId}`));
+    identificacao.appendChild(criarElemento("h2", "", `Pedido #${pedido.id}`));
     identificacao.appendChild(criarElemento("p", "", pedido.criadoEm));
 
     const status = criarElemento(
@@ -77,23 +77,27 @@
     const email = criarElemento("a", "", pedido.compradorEmail);
     email.href = `mailto:${pedido.compradorEmail}`;
     contato.appendChild(email);
+    if (pedido.compradorTelefone) {
+      const telefone = criarElemento("a", "", pedido.compradorTelefone);
+      telefone.href = `tel:${pedido.compradorTelefone.replace(/[^\d+]/g, "")}`;
+      contato.appendChild(telefone);
+    }
+    if (pedido.compradorEndereco) {
+      contato.appendChild(criarElemento("span", "", pedido.compradorEndereco));
+    }
 
     const lista = criarElemento("ul", "pedido-vendedor__itens");
-    pedido.itens.forEach((item) => {
-      const linha = document.createElement("li");
-      const descricao = criarElemento("span");
-      descricao.appendChild(criarElemento("strong", "", item.produtoNome));
-      descricao.appendChild(
-        criarElemento("small", "", `${item.quantidade} × ${formatarPreco(item.precoUnitario)}`)
-      );
-      linha.append(descricao, criarElemento("strong", "", formatarPreco(item.subtotal)));
-      lista.appendChild(linha);
-    });
+    const linha = document.createElement("li");
+    const descricao = criarElemento("span");
+    descricao.appendChild(criarElemento("strong", "", pedido.produtoNome));
+    descricao.appendChild(criarElemento("small", "", `Produto #${pedido.produtoId}`));
+    linha.append(descricao, criarElemento("strong", "", formatarPreco(pedido.total)));
+    lista.appendChild(linha);
 
     const rodape = criarElemento("footer", "pedido-vendedor__rodape");
     rodape.append(
-      criarElemento("span", "", "Subtotal dos seus produtos"),
-      criarElemento("strong", "", formatarPreco(pedido.subtotalVendedor))
+      criarElemento("span", "", "Total deste produto"),
+      criarElemento("strong", "", formatarPreco(pedido.total))
     );
 
     cartao.append(cabecalho, contato, lista, rodape);
@@ -105,7 +109,7 @@
     document.getElementById("resumo-pedidos-recebidos").textContent =
       pedidos.filter((pedido) => pedido.status === "recebido").length;
     document.getElementById("resumo-pedidos-compradores").textContent =
-      new Set(pedidos.map((pedido) => pedido.compradorEmail)).size;
+      new Set(pedidos.map((pedido) => pedido.compradorId)).size;
   }
 
   document.addEventListener("DOMContentLoaded", async function () {
