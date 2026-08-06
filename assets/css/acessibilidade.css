@@ -1,10 +1,11 @@
-/* =========================================================
-   ACESSIBILIDADE
-   - Botão flutuante + painel de opções
-   - Alto contraste
-   - Modo adaptado para daltonismo
-   - Leitura da página (feedback visual do botão "ouvir")
-   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* ---------- Botão flutuante ---------- */
 .botao-acessibilidade {
@@ -34,6 +35,22 @@
   width: 1.75rem;
   height: 1.75rem;
   object-fit: contain;
+}
+
+/* ---------- Foco visível reforçado (não depende de cor) ---------- */
+.botao-acessibilidade:focus-visible,
+.painel-acessibilidade button:focus-visible,
+.painel-acessibilidade input:focus-visible,
+.painel-acessibilidade select:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #005fcc;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* ---------- Painel ---------- */
@@ -154,6 +171,20 @@
   font-size: 0.85rem;
 }
 
+/* Região usada pelo JS para anunciar mudanças de preferência
+   a leitores de tela sem depender de alerta visual. */
+.a11y-regiao-anuncio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* =========================================================
    ALTO CONTRASTE
    ========================================================= */
@@ -170,11 +201,15 @@ body.alto-contraste {
   --cinza-100: #ffffff;
   --cinza-200: #000000;
   --cinza-300: #000000;
+  --erro: #b30000;
+  --sucesso: #005c2e;
+  --aviso: #7a4b00;
   background: #ffffff;
 }
 
 body.alto-contraste .cartao-produto,
 body.alto-contraste .cartao-resumo,
+body.alto-contraste .cartao-perfil,
 body.alto-contraste .painel-detalhe {
   border: 2px solid #000000;
 }
@@ -183,16 +218,79 @@ body.alto-contraste a {
   text-decoration: underline;
 }
 
+body.alto-contraste img {
+  filter: contrast(1.15);
+}
+
 /* =========================================================
    MODO ADAPTADO PARA DALTONISMO
-   Em vez de "simular" a visão, trocamos indicadores que
-   dependem só de cor (verde/vermelho) por combinações
-   azul/laranja + ícones e texto, garantindo leitura sem
-   depender da percepção de cor.
+   Paleta Okabe-Ito: distinguível para visão de cores típica
+   e para as três formas mais comuns de daltonismo —
+   protanopia, deuteranopia e tritanopia — ao mesmo tempo,
+   por isso um único alternador cobre os três casos.
+   Além da cor, cada indicador ganha ícone/símbolo e, quando
+   necessário, textura, para nunca depender só da cor.
    ========================================================= */
+
+body.modo-daltonico {
+  /* Paleta segura (Okabe & Ito, 2008) usada nos elementos
+     de status e ação em vez das cores azul/vermelho padrão */
+  --daltonico-azul: #0072b2;     /* substitui azuis de ação */
+  --daltonico-laranja: #e69f00;  /* substitui avisos */
+  --daltonico-verde: #009e73;    /* substitui "sucesso/ativo" */
+  --daltonico-vermelho: #d55e00; /* substitui "erro/perigo" (vermelhão) */
+  --daltonico-amarelo: #f0e442;  /* destaques */
+  --daltonico-roxo: #cc79a7;     /* destaques secundários */
+  --daltonico-preto: #000000;
+  --daltonico-branco: #ffffff;
+
+  --azul-900: var(--daltonico-azul);
+  --azul-700: var(--daltonico-azul);
+  --azul-600: var(--daltonico-azul);
+  --azul-500: var(--daltonico-azul);
+  --erro: var(--daltonico-vermelho);
+  --sucesso: var(--daltonico-verde);
+  --aviso: var(--daltonico-laranja);
+}
+
+/* Links sempre sublinhados: garante que a diferença entre
+   texto normal e link não dependa de perceber a cor azul */
+body.modo-daltonico a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+/* ---------- Botões: cor + rótulo textual já existente,
+   reforçados com a paleta segura ---------- */
+body.modo-daltonico .botao--primario,
+body.modo-daltonico .btn-submit {
+  background: var(--daltonico-azul);
+  color: var(--daltonico-branco);
+}
+
+body.modo-daltonico .botao--secundario {
+  background: var(--daltonico-branco);
+  color: var(--daltonico-azul);
+  border: 2px solid var(--daltonico-azul);
+}
+
+body.modo-daltonico .botao--perigo,
+body.modo-daltonico [class*="botao"][class*="perigo"] {
+  background: var(--daltonico-vermelho);
+  color: var(--daltonico-branco);
+}
+
+body.modo-daltonico .botao-icone-secundario {
+  border: 1px solid var(--daltonico-azul);
+  color: var(--daltonico-azul);
+}
+
+/* ---------- Selos de status (ativo / baixo estoque / inativo) ---------- */
 body.modo-daltonico .selo--ativo {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: #e6f2fa;
+  color: var(--daltonico-azul);
+  border: 1px solid var(--daltonico-azul);
 }
 
 body.modo-daltonico .selo--ativo::before {
@@ -200,8 +298,9 @@ body.modo-daltonico .selo--ativo::before {
 }
 
 body.modo-daltonico .selo--baixo-estoque {
-  background: #ffedd5;
-  color: #c2410c;
+  background: #fdf1de;
+  color: #7a4b00;
+  border: 1px solid var(--daltonico-laranja);
 }
 
 body.modo-daltonico .selo--baixo-estoque::before {
@@ -210,20 +309,12 @@ body.modo-daltonico .selo--baixo-estoque::before {
 
 body.modo-daltonico .selo--inativo {
   background: #1f2937;
-  color: #ffffff;
+  color: var(--daltonico-branco);
+  border: 1px solid #1f2937;
 }
 
 body.modo-daltonico .selo--inativo::before {
   content: "✕ ";
-}
-
-body.modo-daltonico .botao--perigo {
-  background: #1f2937;
-  color: #ffffff;
-}
-
-body.modo-daltonico .botao--primario {
-  background: #1d4ed8;
 }
 
 /* Padrão diagonal adicional nos selos de estoque baixo/inativo,
@@ -232,9 +323,97 @@ body.modo-daltonico .selo--baixo-estoque,
 body.modo-daltonico .selo--inativo {
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(0, 0, 0, 0.06),
-    rgba(0, 0, 0, 0.06) 4px,
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.08) 4px,
     transparent 4px,
     transparent 8px
   );
+}
+
+/* Qualquer outro selo/badge/etiqueta genérica no site que use
+   as palavras "sucesso", "erro"/"perigo" ou "aviso"/"alerta"
+   no nome da classe também recebe a paleta e o ícone,
+   cobrindo componentes fora deste arquivo sem precisar
+   alterar o HTML. */
+body.modo-daltonico [class*="sucesso"] {
+  background-color: #e6f5f0;
+  color: var(--daltonico-verde);
+  border-color: var(--daltonico-verde);
+}
+body.modo-daltonico [class*="sucesso"]::before {
+  content: "✓ ";
+}
+
+body.modo-daltonico [class*="erro"],
+body.modo-daltonico [class*="perigo"] {
+  background-color: #fbe9e0;
+  color: var(--daltonico-vermelho);
+  border-color: var(--daltonico-vermelho);
+}
+body.modo-daltonico [class*="erro"]::before,
+body.modo-daltonico [class*="perigo"]::before {
+  content: "✕ ";
+}
+
+body.modo-daltonico [class*="aviso"],
+body.modo-daltonico [class*="alerta"] {
+  background-color: #fdf1de;
+  color: #7a4b00;
+  border-color: var(--daltonico-laranja);
+}
+body.modo-daltonico [class*="aviso"]::before,
+body.modo-daltonico [class*="alerta"]::before {
+  content: "⚠ ";
+}
+
+/* ---------- Mensagens de status / feedback de formulário ---------- */
+body.modo-daltonico .mensagem-status,
+body.modo-daltonico .auth-feedback {
+  font-weight: 600;
+}
+
+/* ---------- Campos inválidos: nunca só a borda vermelha ---------- */
+body.modo-daltonico input:invalid:not(:placeholder-shown),
+body.modo-daltonico input.campo-invalido {
+  border: 2px solid var(--daltonico-vermelho);
+  background-image: linear-gradient(#fff, #fff);
+}
+
+body.modo-daltonico input:invalid:not(:placeholder-shown)::after {
+  content: "⚠";
+}
+
+/* ---------- Badges de perfil / conta ---------- */
+body.modo-daltonico .perfil-badge {
+  background: #e6f2fa;
+  color: var(--daltonico-azul);
+  border: 1px solid var(--daltonico-azul);
+}
+
+/* ---------- Categoria do produto ---------- */
+body.modo-daltonico .cartao-produto__categoria {
+  color: var(--daltonico-azul);
+}
+
+/* ---------- Avaliação por estrelas: cor + forma reforçadas ----------
+   Estrelas preenchidas usam amarelo-Okabe-Ito (bem distinto de
+   cinza mesmo em protanopia/deuteranopia/tritanopia). */
+body.modo-daltonico .estrelas,
+body.modo-daltonico .selecao-estrelas button[aria-checked="true"] {
+  color: #b8860b;
+}
+
+body.modo-daltonico .selecao-estrelas button {
+  outline-offset: 1px;
+}
+
+/* ---------- Interruptores (checkboxes) mais visíveis ---------- */
+body.modo-daltonico .interruptor input[type="checkbox"] {
+  accent-color: var(--daltonico-azul);
+  outline: 1px solid var(--daltonico-preto);
+}
+
+body.alto-contraste.modo-daltonico {
+  --azul-900: #000000;
+  --daltonico-azul: #0043a4;
 }
