@@ -235,6 +235,18 @@
             mostrarMensagem("mensagem-status", `${produto.nome} adicionado ao carrinho.`, 3000);
         });
 
+        // ---------- Adicionar uma unidade e abrir o carrinho ----------
+        const botaoVerCarrinho = document.getElementById("botao-ver-carrinho");
+        botaoVerCarrinho.addEventListener("click", function (evento) {
+            if (indisponivel) {
+                evento.preventDefault();
+                mostrarMensagem("mensagem-status", "Este produto está indisponível.", 3000);
+                return;
+            }
+
+            CarrinhoDados.adicionarAoCarrinho(produto, 1);
+        });
+
         // ---------- Favoritar ----------
         const botaoFavoritar = document.getElementById("botao-favoritar");
         function atualizarBotaoFavoritar() {
